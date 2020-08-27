@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace nMind
 {
@@ -23,6 +24,11 @@ namespace nMind
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void _Canvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Debug.WriteLine("Canvas coordinate ({0},{1})", Mouse.GetPosition(_Canvas).X, Mouse.GetPosition(_Canvas).Y);
         }
     }
 }

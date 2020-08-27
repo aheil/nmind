@@ -7,6 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Canvas x:Name="_Canvas"
+                MouseDown="_Canvas_MouseDown"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="White">
+            
+        </Canvas>
     </Grid>
 </Window>
