@@ -11,7 +11,8 @@
                 MouseDown="_Canvas_MouseDown"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Background="White">
+                Background="White"
+                DataContext="Binding CurrentMap">
             
         </Canvas>
     </Grid>

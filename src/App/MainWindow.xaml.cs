@@ -29,6 +29,19 @@ namespace nMind
         private void _Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Debug.WriteLine("Canvas coordinate ({0},{1})", Mouse.GetPosition(_Canvas).X, Mouse.GetPosition(_Canvas).Y);
+
+            // double click
+            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+            {
+                var currentMap = (DataContext as MainViewModel).CurrentMap;
+
+                // TODO: sync VieMdel and Node. keep label ref etc.
+                Label label = new Label();
+                label.Content = "foo";
+                Canvas.SetLeft(label, Mouse.GetPosition(_Canvas).X);
+                Canvas.SetTop(label, Mouse.GetPosition(_Canvas).Y);
+                _Canvas.Children.Add(label);
+            }
         }
     }
 }
