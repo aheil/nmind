@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.CodeDom;
 
 namespace nMind
 {
@@ -21,6 +22,11 @@ namespace nMind
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MainViewModel MainViewModel
+            {
+            get { return DataContext as MainViewModel;  }
+            }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,13 +41,30 @@ namespace nMind
             {
                 var currentMap = (DataContext as MainViewModel).CurrentMap;
 
-                // TODO: sync VieMdel and Node. keep label ref etc.
-                Label label = new Label();
-                label.Content = "foo";
-                Canvas.SetLeft(label, Mouse.GetPosition(_Canvas).X);
-                Canvas.SetTop(label, Mouse.GetPosition(_Canvas).Y);
-                _Canvas.Children.Add(label);
+                this.Add(new Node());      
             }
         }
+
+        private void Add(object o)
+        {
+            if (o is Node)
+            {
+                var node = (Node)o;
+                node.Text = "foo";
+                node.Point = Mouse.GetPosition(_Canvas);
+                this.MainViewModel.CurrentMap.Add(node);
+
+                var label = new Label();
+                label.Content = node.Text;
+                Canvas.SetLeft(label, node.Point.X);
+                Canvas.SetTop(label, node.Point.Y);
+                _Canvas.Children.Add(label);
+            }
+            else
+            {
+                Debug.WriteLine("WARNING: Adding not supported ContentControl");
+            }
+        }
+
     }
 }

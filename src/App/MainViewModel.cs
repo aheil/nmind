@@ -1,6 +1,6 @@
 ﻿namespace nMind
 {
-    internal class MainViewModel
+    public class MainViewModel
     {
         private string[] args;
 

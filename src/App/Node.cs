@@ -4,12 +4,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace nMind
 {
     public class Node : INotifyPropertyChanged
     {
         private string _text;
+        private Point _point;
 
         public string Text
         {
@@ -18,6 +20,16 @@ namespace nMind
             {
                 _text = value;
                 RaisePropertyChanged("Text");
+            }
+        }
+
+        public Point Point
+        {
+            get { return _point; }
+            set
+            {
+                _point = value;
+                RaisePropertyChanged("Point");
             }
         }
         
