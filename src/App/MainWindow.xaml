@@ -13,6 +13,18 @@
                 VerticalAlignment="Stretch"
                 Background="White"
                 DataContext="Binding CurrentMap">
+            <Canvas.Resources>
+
+                <DropShadowEffect x:Key="LabelBorderHighlightEffect" ShadowDepth="0" Color="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}" Opacity="1" BlurRadius="20"/>
+                <Style x:Key="LabelBorderHighlightStyle">
+                    <Style.Triggers>
+                        <Trigger Property="Label.IsMouseOver" Value="True">
+                            <Setter Property="Label.Effect" Value="{StaticResource LabelBorderHighlightEffect}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Canvas.Resources>
+            
             
         </Canvas>
     </Grid>

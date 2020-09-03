@@ -55,6 +55,7 @@ namespace nMind
                 this.MainViewModel.CurrentMap.Add(node);
 
                 var label = new Label();
+                label.Style = (Style)_Canvas.Resources["LabelBorderHighlightStyle"];
                 label.Content = node.Text;
                 Canvas.SetLeft(label, node.Point.X);
                 Canvas.SetTop(label, node.Point.Y);
