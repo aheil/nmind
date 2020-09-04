@@ -23,9 +23,9 @@ namespace nMind
     public partial class MainWindow : Window
     {
         public MainViewModel MainViewModel
-            {
-            get { return DataContext as MainViewModel;  }
-            }
+        {
+            get { return DataContext as MainViewModel; }
+        }
 
         public MainWindow()
         {
@@ -41,8 +41,16 @@ namespace nMind
             {
                 var currentMap = (DataContext as MainViewModel).CurrentMap;
 
-                this.Add(new Node());      
+                this.Add(new Node());
             }
+        }
+
+
+
+        private void _Label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Debug.WriteLine("Label clicked");
+            e.Handled = true;
         }
 
         private void Add(object o)
@@ -57,6 +65,10 @@ namespace nMind
                 var label = new Label();
                 label.Style = (Style)_Canvas.Resources["LabelBorderHighlightStyle"];
                 label.Content = node.Text;
+
+                label.MouseDown += _Label_MouseDown;
+                label.MouseMove += _Label_MouseMove;
+
                 Canvas.SetLeft(label, node.Point.X);
                 Canvas.SetTop(label, node.Point.Y);
                 _Canvas.Children.Add(label);
@@ -67,5 +79,16 @@ namespace nMind
             }
         }
 
+        private void _Label_MouseMove(object sender, MouseEventArgs e)
+        {
+            var label = sender as Label;
+            if (label != null && e.LeftButton == MouseButtonState.Pressed)
+            {
+                Debug.WriteLine("Mouse Moved ({0},{1})", Mouse.GetPosition(_Canvas).X, Mouse.GetPosition(_Canvas).Y);
+                DragDrop.DoDragDrop(label,
+                            label.ToString(),
+                            DragDropEffects.Copy);
+            }
+        }
     }
 }

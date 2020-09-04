@@ -12,7 +12,8 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Background="White"
-                DataContext="Binding CurrentMap">
+                DataContext="Binding CurrentMap"
+                AllowDrop="True">
             <Canvas.Resources>
 
                 <DropShadowEffect x:Key="LabelBorderHighlightEffect" ShadowDepth="0" Color="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}" Opacity="1" BlurRadius="20"/>
