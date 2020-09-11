@@ -22,7 +22,7 @@ namespace nMind
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainViewModel MainViewModel
+        public MainViewModel ViewModel
         {
             get { return DataContext as MainViewModel; }
         }
@@ -45,12 +45,47 @@ namespace nMind
             }
         }
 
+        private void _Canvas_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Debug.WriteLine("Canvas mouse up ({0},{1})", Mouse.GetPosition(_Canvas).X, Mouse.GetPosition(_Canvas).Y);
+            
+            if (_preview != null)
+            {
+                _Canvas.Children.Remove(_preview);
 
+                Canvas.SetLeft(_movable, Mouse.GetPosition(_Canvas).X);
+                Canvas.SetTop(_movable, Mouse.GetPosition(_Canvas).Y);
+
+                _preview = null;
+                _movable = null;
+            }
+        }
+
+        Control _movable = null;
+        Control _preview = null;
 
         private void _Label_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Debug.WriteLine("Label clicked");
+
+            _movable = (Label)sender;
+
             e.Handled = true;
+        }
+
+        private void _Label_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Debug.WriteLine("Label un-clicked");
+
+            if (_movable != null && _movable == sender)
+            {
+                if (_preview != null)
+                {
+                    _Canvas.Children.Remove(_preview);
+                    _preview = null;
+                }
+                _movable = null;
+            }
         }
 
         private void Add(object o)
@@ -60,7 +95,7 @@ namespace nMind
                 var node = (Node)o;
                 node.Text = "foo";
                 node.Point = Mouse.GetPosition(_Canvas);
-                this.MainViewModel.CurrentMap.Add(node);
+                this.ViewModel.CurrentMap.Add(node);
 
                 var label = new Label();
                 label.Style = (Style)_Canvas.Resources["LabelBorderHighlightStyle"];
@@ -68,6 +103,7 @@ namespace nMind
 
                 label.MouseDown += _Label_MouseDown;
                 label.MouseMove += _Label_MouseMove;
+                label.MouseUp += _Label_MouseUp;
 
                 Canvas.SetLeft(label, node.Point.X);
                 Canvas.SetTop(label, node.Point.Y);
@@ -79,16 +115,33 @@ namespace nMind
             }
         }
 
+
         private void _Label_MouseMove(object sender, MouseEventArgs e)
         {
             var label = sender as Label;
             if (label != null && e.LeftButton == MouseButtonState.Pressed)
             {
                 Debug.WriteLine("Mouse Moved ({0},{1})", Mouse.GetPosition(_Canvas).X, Mouse.GetPosition(_Canvas).Y);
-                DragDrop.DoDragDrop(label,
-                            label.ToString(),
-                            DragDropEffects.Copy);
             }
+        }
+
+        private void _Canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_movable != null && _preview == null)
+            {
+                var label = new Label();
+                label.Content = ((Label)_movable).Content;
+                label.Opacity = 0.8;
+                _preview = label;
+                _Canvas.Children.Add(_preview);
+            }
+
+            if (_preview == null)
+                return;
+
+            Canvas.SetLeft(_preview, Mouse.GetPosition(_Canvas).X);
+            Canvas.SetTop(_preview, Mouse.GetPosition(_Canvas).Y);
+
         }
     }
 }

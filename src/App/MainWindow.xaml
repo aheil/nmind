@@ -9,6 +9,8 @@
     <Grid>
         <Canvas x:Name="_Canvas"
                 MouseDown="_Canvas_MouseDown"
+                MouseUp="_Canvas_MouseUp"
+                MouseMove="_Canvas_MouseMove"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Background="White"
