@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace nMind
+namespace nMind.DataModel
 {
     public class Node : INotifyPropertyChanged
     {
@@ -32,7 +32,19 @@ namespace nMind
                 RaisePropertyChanged("Point");
             }
         }
-        
+
+        public void SetX(double value)
+        {
+            _point.X = value;
+            RaisePropertyChanged("Point");
+        }
+
+        public void SetY(double value)
+        {
+            _point.Y = value;
+            RaisePropertyChanged("Point");
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void RaisePropertyChanged(string propertyName)

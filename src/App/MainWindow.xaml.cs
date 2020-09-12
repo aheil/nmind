@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.CodeDom;
+using nMind.Controls;
+using nMind.ViewModels;
 
 namespace nMind
 {
@@ -48,7 +50,7 @@ namespace nMind
         private void _Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Debug.WriteLine("Canvas mouse up ({0},{1})", Mouse.GetPosition(_Canvas).X, Mouse.GetPosition(_Canvas).Y);
-            
+
             if (_preview != null)
             {
                 _Canvas.Children.Remove(_preview);
@@ -68,7 +70,7 @@ namespace nMind
         {
             Debug.WriteLine("Label clicked");
 
-            _movable = (Label)sender;
+            _movable = (Control)sender;
 
             e.Handled = true;
         }
@@ -88,26 +90,28 @@ namespace nMind
             }
         }
 
-        private void Add(object o)
+        private void Add(Control c)
         {
-            if (o is Node)
+            if (c is Node)
             {
-                var node = (Node)o;
-                node.Text = "foo";
-                node.Point = Mouse.GetPosition(_Canvas);
-                this.ViewModel.CurrentMap.Add(node);
+                var dc = ((Node)c).DataContext as NodeViewModel;
 
-                var label = new Label();
-                label.Style = (Style)_Canvas.Resources["LabelBorderHighlightStyle"];
-                label.Content = node.Text;
+                dc.Text = "foo";
+                dc.X = Mouse.GetPosition(_Canvas).X;
+                dc.Y = Mouse.GetPosition(_Canvas).Y;
+                //this.ViewModel.CurrentMap.Add(node);
 
-                label.MouseDown += _Label_MouseDown;
-                label.MouseMove += _Label_MouseMove;
-                label.MouseUp += _Label_MouseUp;
+                //var label = new Label();
+                //label.Style = (Style)_Canvas.Resources["LabelBorderHighlightStyle"];
+                //label.Content = node.Text;
 
-                Canvas.SetLeft(label, node.Point.X);
-                Canvas.SetTop(label, node.Point.Y);
-                _Canvas.Children.Add(label);
+                c.MouseDown += _Label_MouseDown;
+                c.MouseMove += _Label_MouseMove;
+                c.MouseUp += _Label_MouseUp;
+
+                Canvas.SetLeft(c, dc.X);
+                Canvas.SetTop(c, dc.Y);
+                _Canvas.Children.Add(c);
             }
             else
             {
@@ -129,10 +133,13 @@ namespace nMind
         {
             if (_movable != null && _preview == null)
             {
-                var label = new Label();
-                label.Content = ((Label)_movable).Content;
-                label.Opacity = 0.8;
-                _preview = label;
+                if (!(_movable is Node))
+                    return; 
+
+                var node = new Node();
+                ((NodeViewModel)node.DataContext).Text = ((NodeViewModel)((Node)_movable).DataContext).Text;
+                node.Opacity = 0.8;
+                _preview = node;
                 _Canvas.Children.Add(_preview);
             }
 
