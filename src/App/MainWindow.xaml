@@ -6,8 +6,22 @@
         xmlns:local="clr-namespace:nMind"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Canvas x:Name="_Canvas"
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open" CanExecute="OpenCommand_CanExecute" Executed="OpenCommand_Executed" />
+        <CommandBinding Command="ApplicationCommands.Save" CanExecute="SaveCommand_CanExecute" Executed="SaveCommand_Executed" />
+        <CommandBinding Command="local:AppCommands.Exit" CanExecute="ExitCommand_CanExecute" Executed="ExitCommand_Executed" />
+    </Window.CommandBindings>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Command="ApplicationCommands.Open" />
+                <MenuItem Command="ApplicationCommands.Save" />
+                <Separator />
+                <MenuItem Command="local:AppCommands.Exit" />
+            </MenuItem>
+        </Menu>
+        <Grid>
+            <Canvas x:Name="_Canvas"
                 MouseDown="_Canvas_MouseDown"
                 MouseUp="_Canvas_MouseUp"
                 MouseMove="_Canvas_MouseMove"
@@ -16,19 +30,20 @@
                 Background="White"
                 DataContext="Binding CurrentMap"
                 AllowDrop="True">
-            <Canvas.Resources>
+                <Canvas.Resources>
 
-                <DropShadowEffect x:Key="LabelBorderHighlightEffect" ShadowDepth="0" Color="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}" Opacity="1" BlurRadius="20"/>
-                <Style x:Key="LabelBorderHighlightStyle">
-                    <Style.Triggers>
-                        <Trigger Property="Label.IsMouseOver" Value="True">
-                            <Setter Property="Label.Effect" Value="{StaticResource LabelBorderHighlightEffect}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Canvas.Resources>
-            
-            
-        </Canvas>
-    </Grid>
+                    <DropShadowEffect x:Key="LabelBorderHighlightEffect" ShadowDepth="0" Color="{Binding Source={x:Static SystemParameters.WindowGlassBrush}}" Opacity="1" BlurRadius="20"/>
+                    <Style x:Key="LabelBorderHighlightStyle">
+                        <Style.Triggers>
+                            <Trigger Property="Label.IsMouseOver" Value="True">
+                                <Setter Property="Label.Effect" Value="{StaticResource LabelBorderHighlightEffect}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Canvas.Resources>
+
+
+            </Canvas>
+        </Grid>
+    </DockPanel>
 </Window>
