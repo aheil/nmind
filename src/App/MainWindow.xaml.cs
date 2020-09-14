@@ -16,6 +16,9 @@ using System.Diagnostics;
 using System.CodeDom;
 using nMind.Controls;
 using nMind.ViewModels;
+using Microsoft.Win32;
+using System.Net.Mail;
+using System.IO;
 
 namespace nMind
 {
@@ -99,7 +102,7 @@ namespace nMind
                 dc.Text = "foo";
                 dc.X = Mouse.GetPosition(_Canvas).X;
                 dc.Y = Mouse.GetPosition(_Canvas).Y;
-                //this.ViewModel.CurrentMap.Add(node);
+                this.ViewModel.CurrentMap.Add(dc.Value);
 
                 //var label = new Label();
                 ((Node)c).Label.Style = (Style)_Canvas.Resources["LabelBorderHighlightStyle"];
@@ -178,7 +181,12 @@ namespace nMind
 
         private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            string map = this.ViewModel.CurrentMap.Serialize();
+
+            SaveFileDialog sfd = new SaveFileDialog();
+
+            if (sfd.ShowDialog() == true)
+                File.WriteAllText(sfd.FileName, map);
         }
     }
 }

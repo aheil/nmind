@@ -18,6 +18,11 @@ namespace nMind.ViewModels
             _node = new Node();
         }
 
+        public Node Value
+        {
+            get { return _node; }
+        }
+
         public string Text
         {
             get { return _node.Text; }
