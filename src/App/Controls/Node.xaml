@@ -7,7 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label
-            Content="{Binding Path=Text}"></Label>
+        <Label x:Name="Label" Content="{Binding Path=Text}" />
     </Grid>
 </UserControl>

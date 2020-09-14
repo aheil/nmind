@@ -34,7 +34,7 @@ namespace nMind
             InitializeComponent();
         }
 
-        private void _Canvas_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Debug.WriteLine("Canvas coordinate ({0},{1})", Mouse.GetPosition(_Canvas).X, Mouse.GetPosition(_Canvas).Y);
 
@@ -47,7 +47,7 @@ namespace nMind
             }
         }
 
-        private void _Canvas_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Debug.WriteLine("Canvas mouse up ({0},{1})", Mouse.GetPosition(_Canvas).X, Mouse.GetPosition(_Canvas).Y);
 
@@ -66,7 +66,7 @@ namespace nMind
         Control _movable = null;
         Control _preview = null;
 
-        private void _Label_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Node_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Debug.WriteLine("Label clicked");
 
@@ -75,7 +75,7 @@ namespace nMind
             e.Handled = true;
         }
 
-        private void _Label_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Node_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Debug.WriteLine("Label un-clicked");
 
@@ -102,12 +102,12 @@ namespace nMind
                 //this.ViewModel.CurrentMap.Add(node);
 
                 //var label = new Label();
-                //label.Style = (Style)_Canvas.Resources["LabelBorderHighlightStyle"];
+                ((Node)c).Label.Style = (Style)_Canvas.Resources["LabelBorderHighlightStyle"];
                 //label.Content = node.Text;
 
-                c.MouseDown += _Label_MouseDown;
-                c.MouseMove += _Label_MouseMove;
-                c.MouseUp += _Label_MouseUp;
+                c.MouseDown += Node_MouseDown;
+                c.MouseMove += Node_MouseMove;
+                c.MouseUp += Node_MouseUp;
 
                 Canvas.SetLeft(c, dc.X);
                 Canvas.SetTop(c, dc.Y);
@@ -120,7 +120,7 @@ namespace nMind
         }
 
 
-        private void _Label_MouseMove(object sender, MouseEventArgs e)
+        private void Node_MouseMove(object sender, MouseEventArgs e)
         {
             var label = sender as Label;
             if (label != null && e.LeftButton == MouseButtonState.Pressed)
@@ -129,7 +129,7 @@ namespace nMind
             }
         }
 
-        private void _Canvas_MouseMove(object sender, MouseEventArgs e)
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (_movable != null && _preview == null)
             {
