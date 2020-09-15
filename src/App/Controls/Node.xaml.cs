@@ -22,11 +22,36 @@ namespace nMind.Controls
     /// </summary>
     public partial class Node : UserControl
     {
-
         public Node()
         {
             InitializeComponent();
             DataContext = new NodeViewModel();
+        }
+
+        private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Label.Visibility = Visibility.Hidden;
+            EditBox.Visibility = Visibility.Visible;
+
+            EditBox.Focus();
+        }
+
+        private void EditBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter || e.Key == Key.Return)
+            {
+                EditBox.Visibility = Visibility.Hidden;
+                Label.Visibility = Visibility.Visible;
+
+                BindingExpression binding = EditBox.GetBindingExpression(TextBox.TextProperty);
+                binding.UpdateSource();
+            }
+        }
+
+        private void EditBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            EditBox.Visibility = Visibility.Hidden;
+            Label.Visibility = Visibility.Visible;
         }
     }
 }
