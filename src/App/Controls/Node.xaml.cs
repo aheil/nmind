@@ -28,6 +28,12 @@ namespace nMind.Controls
             DataContext = new NodeViewModel();
         }
 
+        public Node(NodeViewModel nodeViewModel)
+        {
+            InitializeComponent();
+            DataContext = nodeViewModel;
+        }
+
         private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Label.Visibility = Visibility.Hidden;

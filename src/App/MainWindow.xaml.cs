@@ -35,6 +35,17 @@ namespace nMind
         public MainWindow()
         {
             InitializeComponent();
+            _addControlCallbackHandler = this.AddControl;
+        }
+
+
+        AddControlCallback _addControlCallbackHandler;
+        public AddControlCallback AddControlCallbackHandler
+        {
+            get
+            {
+                return _addControlCallbackHandler;
+            }
         }
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
@@ -46,7 +57,7 @@ namespace nMind
             {
                 var currentMap = (DataContext as MainViewModel).CurrentMap;
 
-                this.Add(new Node());
+                this.Add(new Node(), true);
             }
         }
 
@@ -93,17 +104,26 @@ namespace nMind
             }
         }
 
-        private void Add(Control c)
+        public void AddControl(NodeViewModel nodeViewModel)
+        {
+            var node = new Node(nodeViewModel);
+            Add(node, false);
+        }
+
+        private void Add(Control c, bool addNode)
         {
             if (c is Node)
             {
                 var dc = ((Node)c).DataContext as NodeViewModel;
 
-                dc.Text = "foo";
-                dc.X = Mouse.GetPosition(_Canvas).X;
-                dc.Y = Mouse.GetPosition(_Canvas).Y;
-                this.ViewModel.CurrentMap.Add(dc.Value);
-
+                if (addNode)
+                {
+                    dc.Text = "foo";
+                    dc.X = Mouse.GetPosition(_Canvas).X;
+                    dc.Y = Mouse.GetPosition(_Canvas).Y;
+                    // TODO: This has to be done better, necesarry to avoid change of loaded list
+                    this.ViewModel.CurrentMap.Add(dc.Value);
+                }
                 //var label = new Label();
                 ((Node)c).Label.Style = (Style)_Canvas.Resources["LabelBorderHighlightStyle"];
                 //label.Content = node.Text;
@@ -137,7 +157,7 @@ namespace nMind
             if (_movable != null && _preview == null)
             {
                 if (!(_movable is Node))
-                    return; 
+                    return;
 
                 var node = new Node();
                 ((NodeViewModel)node.DataContext).Text = ((NodeViewModel)((Node)_movable).DataContext).Text;
@@ -171,7 +191,14 @@ namespace nMind
 
         private void OpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var dialog = new OpenFileDialog();
+
+            if (dialog.ShowDialog() == true)
+            {
+                var raw = File.ReadAllText(dialog.FileName);
+
+                this.ViewModel.CurrentMap.Deserialize(raw);
+            }
         }
 
         private void SaveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -183,10 +210,10 @@ namespace nMind
         {
             string map = this.ViewModel.CurrentMap.Serialize();
 
-            SaveFileDialog sfd = new SaveFileDialog();
+            var dialog = new SaveFileDialog();
 
-            if (sfd.ShowDialog() == true)
-                File.WriteAllText(sfd.FileName, map);
+            if (dialog.ShowDialog() == true)
+                File.WriteAllText(dialog.FileName, map);
         }
     }
 }

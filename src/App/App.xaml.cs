@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using nMind.ViewModels;
 
 namespace nMind
 {
@@ -17,7 +18,7 @@ namespace nMind
         {
             base.OnStartup(e);
             MainWindow = new MainWindow();
-            MainWindow.DataContext = new MainViewModel(e.Args);
+            MainWindow.DataContext = new MainViewModel(e.Args, ((MainWindow)MainWindow).AddControlCallbackHandler);
             MainWindow.Show();
         }
     }

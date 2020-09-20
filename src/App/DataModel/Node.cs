@@ -33,6 +33,12 @@ namespace nMind.DataModel
             }
         }
 
+        internal void Refresh()
+        {
+            RaisePropertyChanged("Point");
+            RaisePropertyChanged("Text");
+        }
+
         public void SetX(double value)
         {
             _point.X = value;

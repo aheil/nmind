@@ -10,12 +10,25 @@ using nMind.DataModel;
 
 namespace nMind.ViewModels
 {
-    class NodeViewModel : INotifyPropertyChanged
+    public class NodeViewModel : BaseViewModel
     {
         private Node _node = null;
         public NodeViewModel()
         {
             _node = new Node();
+        }
+
+        public NodeViewModel(Node node)
+        {
+            _node = node;
+        }
+
+        private void Refresh()
+        {
+            OnPropertyChanged("Text");
+            OnPropertyChanged("X");
+            OnPropertyChanged("Y");
+
         }
 
         public Node Value
@@ -50,16 +63,6 @@ namespace nMind.ViewModels
             {
                 _node.SetY(value);
                 OnPropertyChanged("Y");
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyname)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyname));
             }
         }
     }

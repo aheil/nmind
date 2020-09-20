@@ -63,6 +63,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppCommands.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\NodeViewModel.cs" />
     <Page Include="Controls\Node.xaml">
       <SubType>Designer</SubType>
@@ -80,7 +81,7 @@
       <DependentUpon>Node.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers.cs" />
-    <Compile Include="MainViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -91,7 +92,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MapViewModel.cs" />
+    <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="DataModel\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
