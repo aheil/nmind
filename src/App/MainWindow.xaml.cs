@@ -197,7 +197,11 @@ namespace nMind
             {
                 var raw = File.ReadAllText(dialog.FileName);
 
-                this.ViewModel.CurrentMap.Deserialize(raw);
+                _Canvas.Children.Clear();
+
+                var mapViewModel = new MapViewModel(_addControlCallbackHandler);
+                mapViewModel.Deserialize(raw);
+                this.ViewModel.CurrentMap = mapViewModel;
             }
         }
 

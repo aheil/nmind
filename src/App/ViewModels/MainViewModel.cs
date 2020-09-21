@@ -25,6 +25,11 @@ namespace nMind.ViewModels
 
                 return _currentMapViewModel; 
             }
+
+            set
+            {
+                _currentMapViewModel = value;
+            }
         }
 
     }
