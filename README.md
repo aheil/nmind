@@ -1,5 +1,5 @@
 # nmind
 Mindmapping and more
 
-![CI](https://github.com/aheil/nmind/workflows/CI/badge.svg)
+![Core 5.0 WPf COntinuous Integration](https://github.com/aheil/nmind/workflows/CI/badge.svg)
 
