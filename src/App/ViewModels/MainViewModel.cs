@@ -1,36 +1,55 @@
-﻿using nMind.Controls;
+﻿using nMind.Commands;
+using nMind.Controls;
+using nMind.Views;
+using System;
+using System.Net.NetworkInformation;
+using System.Windows;
+using System.Windows.Input;
 
 namespace nMind.ViewModels
 {
     public delegate void AddCallback();
 
-    public class MainViewModel
+    public class MainViewModel : ViewModelBase<IMainView>
     {
-        private string[] args;
-        private AddControlCallback addControlCallback;
-
-        public MainViewModel(string[] args, AddControlCallback handler)
+        public MainViewModel() : base(new MainWindow())
         {
-            this.args = args;
-            this.addControlCallback = handler;
+
         }
 
-        MapViewModel _currentMapViewModel;
-
-        public MapViewModel CurrentMap
+        public void Show()
         {
-            get {
-                if (_currentMapViewModel == null)
-                    _currentMapViewModel = new MapViewModel(this.addControlCallback);
-
-                return _currentMapViewModel; 
-            }
-
-            set
-            {
-                _currentMapViewModel = value;
-            }
+            this.View.Show();
         }
+
+        public void Dispose()
+        {
+
+        }
+
+        private void Exit()
+        {
+            Dispose();
+            Application.Current.Shutdown();
+        }
+
+        //MapViewModel _currentMapViewModel;
+
+        //public MapViewModel CurrentMap
+        //{
+        //    get {
+        //        //if (_currentMapViewModel == null)
+        //        //    _currentMapViewModel = new MapViewModel();
+
+        //        //return _currentMapViewModel; 
+        //        throw new NotImplementedException();
+        //    }
+
+        //    set
+        //    {
+        //        _currentMapViewModel = value;
+        //    }
+        //}
 
     }
 }

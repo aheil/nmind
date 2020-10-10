@@ -62,9 +62,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AppCommands.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="Commands\AppCommands.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="ViewModels\MenuItemViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\NodeViewModel.cs" />
+    <Compile Include="Views\IView.cs" />
+    <Compile Include="Views\IMainView.cs" />
     <Page Include="Controls\Node.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

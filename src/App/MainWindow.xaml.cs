@@ -19,33 +19,22 @@ using nMind.ViewModels;
 using Microsoft.Win32;
 using System.Net.Mail;
 using System.IO;
+using nMind.Views;
+using nMind.Commands;
+using System.Collections.ObjectModel;
 
 namespace nMind
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IMainView
     {
-        public MainViewModel ViewModel
-        {
-            get { return DataContext as MainViewModel; }
-        }
+        public ObservableCollection<MenuItemViewModel> MenuItems { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            _addControlCallbackHandler = this.AddControl;
-        }
-
-
-        AddControlCallback _addControlCallbackHandler;
-        public AddControlCallback AddControlCallbackHandler
-        {
-            get
-            {
-                return _addControlCallbackHandler;
-            }
         }
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
@@ -55,9 +44,10 @@ namespace nMind
             // double click
             if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
             {
-                var currentMap = (DataContext as MainViewModel).CurrentMap;
+                throw new NotImplementedException();
+                //var currentMap = (DataContext as MainViewModel).CurrentMap;
 
-                this.Add(new Node(), true);
+                //this.Add(new Node(), true);
             }
         }
 
@@ -122,7 +112,7 @@ namespace nMind
                     dc.X = Mouse.GetPosition(_Canvas).X;
                     dc.Y = Mouse.GetPosition(_Canvas).Y;
                     // TODO: This has to be done better, necesarry to avoid change of loaded list
-                    this.ViewModel.CurrentMap.Add(dc.Value);
+                    //this.ViewModel.CurrentMap.Add(dc.Value);
                 }
                 //var label = new Label();
                 ((Node)c).Label.Style = (Style)_Canvas.Resources["LabelBorderHighlightStyle"];
@@ -181,7 +171,7 @@ namespace nMind
 
         private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            Application.Current.Shutdown(0);
         }
 
         private void OpenCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -195,13 +185,14 @@ namespace nMind
 
             if (dialog.ShowDialog() == true)
             {
-                var raw = File.ReadAllText(dialog.FileName);
+                throw new NotImplementedException();
+                //var raw = File.ReadAllText(dialog.FileName);
 
-                _Canvas.Children.Clear();
+                //_Canvas.Children.Clear();
 
-                var mapViewModel = new MapViewModel(_addControlCallbackHandler);
-                mapViewModel.Deserialize(raw);
-                this.ViewModel.CurrentMap = mapViewModel;
+                //var mapViewModel = new MapViewModel(_addControlCallbackHandler);
+                //mapViewModel.Deserialize(raw);
+                //this.ViewModel.CurrentMap = mapViewModel;
             }
         }
 
@@ -212,12 +203,13 @@ namespace nMind
 
         private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            string map = this.ViewModel.CurrentMap.Serialize();
+            throw new NotImplementedException();
+            //string map = this.ViewModel.CurrentMap.Serialize();
 
-            var dialog = new SaveFileDialog();
+            //var dialog = new SaveFileDialog();
 
-            if (dialog.ShowDialog() == true)
-                File.WriteAllText(dialog.FileName, map);
+            //if (dialog.ShowDialog() == true)
+            //    File.WriteAllText(dialog.FileName, map);
         }
     }
 }

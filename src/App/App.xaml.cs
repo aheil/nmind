@@ -14,12 +14,20 @@ namespace nMind
     /// </summary>
     public partial class App : Application
     {
+        private MainViewModel _mainViewModel;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            MainWindow = new MainWindow();
-            MainWindow.DataContext = new MainViewModel(e.Args, ((MainWindow)MainWindow).AddControlCallbackHandler);
-            MainWindow.Show();
+
+            _mainViewModel = new MainViewModel();
+            _mainViewModel.Show();
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            if (_mainViewModel != null)
+                _mainViewModel.Dispose();
         }
     }
 }

@@ -7,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using nMind.DataModel;
+using nMind.Views;
 
 namespace nMind.ViewModels
 {
-    public class NodeViewModel : BaseViewModel
+    public class NodeViewModel //: BaseViewModel<IMainView>
     {
         private Node _node = null;
         public NodeViewModel()
@@ -25,9 +26,9 @@ namespace nMind.ViewModels
 
         private void Refresh()
         {
-            OnPropertyChanged("Text");
-            OnPropertyChanged("X");
-            OnPropertyChanged("Y");
+            //OnPropertyChanged("Text");
+            //OnPropertyChanged("X");
+            //OnPropertyChanged("Y");
 
         }
 
@@ -41,8 +42,8 @@ namespace nMind.ViewModels
             get { return _node.Text; }
             set
             {
-                _node.Text = value;
-                OnPropertyChanged("Text");
+                //_node.Text = value;
+                //OnPropertyChanged("Text");
             }
         }
 
@@ -51,8 +52,8 @@ namespace nMind.ViewModels
             get { return _node.Point.X; }
             set
             {
-                _node.SetX(value);
-                OnPropertyChanged("X");
+                //_node.SetX(value);
+                //OnPropertyChanged("X");
             }
         }
 
@@ -61,8 +62,8 @@ namespace nMind.ViewModels
             get { return _node.Point.Y; }
             set
             {
-                _node.SetY(value);
-                OnPropertyChanged("Y");
+                //_node.SetY(value);
+                //OnPropertyChanged("Y");
             }
         }
     }

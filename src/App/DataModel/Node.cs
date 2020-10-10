@@ -32,7 +32,6 @@ namespace nMind.DataModel
                 RaisePropertyChanged("Point");
             }
         }
-
         internal void Refresh()
         {
             RaisePropertyChanged("Point");
@@ -62,6 +61,4 @@ namespace nMind.DataModel
             }
         }
     }
-
-   
 }
